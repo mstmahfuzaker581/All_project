@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Task</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-group">
+        <label for="categories">Categories:</label>
+        <select multiple class="form-control" id="categories" name="categories">
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if category in task.categories.all %}selected{% endif %}>{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+{% endblock %}
