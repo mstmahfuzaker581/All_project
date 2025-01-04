@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block mainContent %}
+    <section class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Add Musicians from here</h2>
+                <p>Add your name and reach to our audiance</p>
+                <a href="{% url "add_musicians" %}">
+                    <button class="btn btn-dark">Add Musicians</button>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <h2>Add Album from here</h2>
+                <p>Got a new album? No worries add your register your from here</p>
+                <a href="{% url "add_album" %}">
+                    <button class="btn btn-dark">Add Album</button>
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock mainContent %}

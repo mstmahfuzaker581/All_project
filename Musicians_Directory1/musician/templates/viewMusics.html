@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block mainContent %}
+    <section class="container">
+        <h1 class="text-center my-4">Available music</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Musician Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Album Rating</th>
+                    <th scope="col">Instrument Type</th>
+                    <th scope="col">Album Name</th>
+                    <th scope="col">Release Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for album in data %}
+                    <tr>
+                        <td scope="col">{{ album.id }}</td>
+                        <td scope="col">
+                            <a href="{% url "edit_musician" album.musician.id %}">{{ album.musician.first_name }} {{ album.musician.last_name }}</a>
+                        </td>
+                        <td scope="col">{{ album.musician.email }}</td>
+                        <td scope="col">{{ album.rating }}</td>
+                        <td scope="col">{{ album.musician.instrument }}</td>
+                        <td scope="col">{{ album.album_name }}</td>
+                        <td scope="col">{{ album.release_date }}</td>
+                        <td scope="col">
+                            {% if user.is_authenticated %}
+                                <a href="{% url "edit_album" album.id %}">
+                                    <button class="btn me-1 btn-warning mb-2">Edit</button>
+                                </a>
+                                <form action="{% url "delete_album" album.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn me-1 btn-danger">Delete</button>
+                                </form>
+                            {% else %}
+                                <p class="text-muted">Login to view actions</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock mainContent %}
