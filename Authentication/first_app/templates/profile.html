@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+{% block content %}
+    <section class="container">
+        <h1 class="text-center my-5">This is profile page</h1>
+        <h4 class="text-center">welcome {{ request.user }}</h4>
+        <div class="my-5">
+            <div class="text-center">
+                <a href="{% url "change_password_with_old_password" %}" class="my-2">
+                    <button class="btn btn-warning">Change password with old password</button>
+                </a>
+                <a href="{% url "change_password_without_old_password" %}" class="my-2">
+                    <button class="btn btn-warning">Change password without old password</button>
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
