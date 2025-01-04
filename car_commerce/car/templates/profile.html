@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block mainContent %}
+    <section class="container">
+        <h2 class="text-center my-5">Welcome {{ user.username }}</h2>
+        <div class="text-center">
+            <a href="{% url "update" %}">
+                <button class="btn btn-warning">Update your profile</button>
+            </a>
+        </div>
+        <div>
+            <h4 class="my-4">
+                Total orders: <b>{{ orders|length }}</b>
+                <div class="row mt-5 g-3">
+                    {% for order in orders %}
+                        <div class="col-12 col-md-4">
+                            <div class="card">
+                                <img src="{{ order.car.image.url }}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ order.car.title }}</h5>
+                                    <p class="mb-0">
+                                        Price: <i><b>${{ order.car.price }}</b></i>
+                                    </p>
+                                    <p>
+                                        Brand: <i><b>{{ order.car.brand.name }}</b></i>
+                                    </p>
+                                    <p class="bg-dark-subtle text-muted py-2 rounded text-center">Status: pending</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </h4>
+        </div>
+    </section>
+{% endblock mainContent %}

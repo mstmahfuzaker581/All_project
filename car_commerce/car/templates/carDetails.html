@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block mainContent %}
+    <section class="container-fluid">
+        <div class="row g-2 mt-5">
+            <div class="col-12 col-md-6">
+                <img src="{{ data.image.url }}" alt="car" class="img-fluid rounded">
+            </div>
+            <div class="col-12 col-md-6">
+                <p class="fs-1">
+                    Model Name: <span class="fw-bold">{{ data.title }}</span>
+                </p>
+                <p class="mb-1 fs-3">
+                    Price: <i><b>${{ data.price }}</b></i>
+                </p>
+                <p class="fs-3">
+                    Brand: <i><b>{{ data.brand.name }}</b></i>
+                </p>
+                <p class="fs-3">
+                    Color: <i class="text-warning"><b>{{ data.color }}</b></i>
+                </p>
+                <p class="fs-3">
+                    Available quantity: <i><b>{{ data.quantity }}</b></i>
+                </p>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOne">Description</button>
+                        </h2>
+                        <div id="collapseOne"
+                             class="accordion-collapse collapse show"
+                             aria-labelledby="headingOne"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body">{{ data.description }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url "car_detail" data.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-success">Order now</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url "login" %}">
+                            <button class="btn btn-warning">Login to order</button>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <section class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8">
+                        <h3 class="text-center">Reviews : {{ total_comment }}</h3>
+                        <form method="post" action="{% url "comment" data.id %}">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button class="btn btn-success">Drop a review</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8">
+                            {% for cmt in comments %}
+                                <div class="border p-3 my-4 shadow ">
+                                    <h5>{{ cmt.name }}</h5>
+                                    <small>{{ cmt.timestamp }}</small>
+                                    <p>{{ cmt.body }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock mainContent %}

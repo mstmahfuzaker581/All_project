@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    User authentication
+{% endblock title %}
+{% block mainContent %}
+    <section class="container py-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <div class="border border-2 p-3 rounded shadow">
+                    <h2 class="fw-bold text-center">{{ type }} form</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button class="btn btn-success">{{ type }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock mainContent %}
